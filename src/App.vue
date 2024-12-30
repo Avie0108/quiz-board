@@ -57,11 +57,11 @@ const players = [
 }
 
 .board-holder {
-	height: 100%;
+	flex: 1;
+	overflow-y: auto;
 }
 
 .score-bar {
-	flex: 1;
-	min-height: 130px;
+	height: 130px;
 }
 </style>

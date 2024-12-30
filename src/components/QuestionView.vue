@@ -46,7 +46,7 @@ onUnmounted(() => document.removeEventListener('keyup', keyup));
 
 <style scoped lang="scss">
 .question-holder {
-	height: 100%;
+	min-height: 100%;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
