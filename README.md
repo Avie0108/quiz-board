@@ -41,8 +41,8 @@ export const Questions: Category[] = [
     {
         name: "Example Category",
         multiplier: 1.0, //optional multiplier of points
-        icon: "Example.png" // optional icon for the category
-        questions: { }
+        icon: "Example.png", // optional icon for the category
+        questions: { },
     }
 ];
 ```
@@ -52,7 +52,7 @@ A question must have a name, the points it's worth, the question itself, and the
 ```ts
 questions: {
     "example": { // the name
-        points: 100 // points before multiplier is applied
+        points: 100, // points before multiplier is applied
         question: {
             text: "the question", // optional text
             image: { // optional image
