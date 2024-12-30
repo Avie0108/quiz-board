@@ -57,16 +57,20 @@ questions: {
             text: "the question", // optional text
             image: { // optional image
                 url: "questions/example.png", // url of the image minus public/
-                height: 400, // height of the image
+                height: 400, // optional height of the image
+                width: 400, // optional width of the image
+            },
+            video: { // optional video
+                url: "questions/example.mp4", // url of the video minus public/
+                height: 400, // optional height of the video
+                width: 400, // optional width of the video
             },
             audio: "example.mp3", // optional audio
         },
         answer: {
             text: "the question", // optional text
-            image: { // optional image
-                url: "questions/example.png", // url of the image minus public/
-                height: 400, // height of the image
-            },
+            image: "questions/example.png", // shortcut for image for when you don't care about size
+            video: "questions/example.png", // shortcut for video for when you don't care about size
             audio: "example.mp3", // optional audio
         },
     }

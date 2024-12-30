@@ -13,7 +13,34 @@ defineProps<{
 			{{ data.text }}
 		</div>
 		<div v-if="data.image">
-			<img :src="data.image.url" :height="data.image.height" />
+			<img v-bind="(() =>
+			{
+				if (typeof data.image == 'object')
+					return {
+						src: data.image.url,
+						...data.image,
+						url: undefined,
+					};
+				else
+					return {
+						src: data.image
+					};
+			})()" />
+		</div>
+		<div v-if="data.video">
+			<video v-bind="(() =>
+			{
+				if (typeof data.video == 'object')
+					return {
+						src: data.video.url,
+						...data.video,
+						url: undefined,
+					};
+				else
+					return {
+						src: data.video
+					};
+			})()" controls />
 		</div>
 		<div v-if="data.audio">
 			<audio :src="data.audio" controls />

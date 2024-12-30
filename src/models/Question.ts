@@ -2,8 +2,16 @@ export interface RenderData
 {
 	image?: {
 		url: string,
-		height: number,
-	},
+		height?: number,
+		width?: number,
+	} | string,
+
+	video?: {
+		url: string,
+		height?: number,
+		width?: number,
+	} | string,
+
 	audio?: string,
 	text?: string,
 }
