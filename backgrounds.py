@@ -5,7 +5,7 @@ os.chdir(Path(__file__).parent)
 
 backgrounds = Path("public/backgrounds")
 
-files = [item.relative_to(backgrounds) for item in backgrounds.rglob("*") if item.is_file() and item.name != ".gitkeep"]
+files = [item.relative_to(backgrounds).as_posix() for item in backgrounds.rglob("*") if item.is_file() and item.name != ".gitkeep"]
 
 with open("src/data/backgrounds.ts", "w", encoding="utf-8") as f:
 	f.write("export const Backgrounds = [\n")
