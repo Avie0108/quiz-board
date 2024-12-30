@@ -10,6 +10,8 @@ export interface RenderData
 		url: string,
 		height?: number,
 		width?: number,
+		loop?: boolean,
+		autoplay?: boolean,
 	} | string,
 
 	audio?: string,

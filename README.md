@@ -64,13 +64,15 @@ questions: {
                 url: "questions/example.mp4", // url of the video minus public/
                 height: 400, // optional height of the video
                 width: 400, // optional width of the video
+                loop: true, // optional if the video should loop
+                autoplay: true, // optional if the video should play automatically
             },
             audio: "example.mp3", // optional audio
         },
         answer: {
             text: "the question", // optional text
-            image: "questions/example.png", // shortcut for image for when you don't care about size
-            video: "questions/example.png", // shortcut for video for when you don't care about size
+            image: "questions/example.png", // shortcut for image
+            video: "questions/example.png", // shortcut for video
             audio: "example.mp3", // optional audio
         },
     }
