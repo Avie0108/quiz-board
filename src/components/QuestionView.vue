@@ -11,36 +11,32 @@ defineProps<{
 const questionStore = useQuestionStore();
 const showAnswer = ref(false);
 
-const keyup = (event: KeyboardEvent) =>
-{
-	switch (event.key)
-	{
+const keyup = (event: KeyboardEvent) => {
+	switch (event.key) {
 		case "Escape":
-			questionStore.removeQuestion();
+			questionStore.clearQuestion();
 			return;
 		case " ":
-			if (!showAnswer.value)
-			{
+			if (!showAnswer.value) {
 				showAnswer.value = true;
 				questionStore.markAnswered();
-			}
-			else
-				questionStore.removeQuestion();
+			} else questionStore.clearQuestion();
 	}
-
 };
 
-
-onMounted(() => document.addEventListener('keyup', keyup));
-onUnmounted(() => document.removeEventListener('keyup', keyup));
-
+onMounted(() => document.addEventListener("keyup", keyup));
+onUnmounted(() => document.removeEventListener("keyup", keyup));
 </script>
 
 <template>
 	<div class="question-holder">
 		<RenderDataRenderer class="question-data-renderer" :data="question.question" />
 		<div class="line" v-if="showAnswer" />
-		<RenderDataRenderer class="question-data-renderer" v-if="showAnswer" :data="question.answer" />
+		<RenderDataRenderer
+			class="question-data-renderer"
+			v-if="showAnswer"
+			:data="question.answer"
+		/>
 	</div>
 </template>
 
@@ -57,13 +53,13 @@ onUnmounted(() => document.removeEventListener('keyup', keyup));
 
 	justify-content: center;
 
-	>.line {
+	> .line {
 		width: 100%;
 		border-top: 5px dotted white;
 	}
 
-	>.question-data-renderer {
-		flex: 1
+	> .question-data-renderer {
+		flex: 1;
 	}
 }
 </style>

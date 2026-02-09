@@ -9,14 +9,11 @@ import { ref } from "vue";
 
 const background = ref(RandomBackground());
 
-setInterval(() => background.value = RandomBackground(), /**/ 60 * /**/ 1000);
+setInterval(() => (background.value = RandomBackground()), /**/ 60 * /**/ 1000);
 
 const question = useQuestionStore();
 
-const players = [
-	"Test",
-].sort();
-
+const players = ["Test"].sort();
 </script>
 
 <template>

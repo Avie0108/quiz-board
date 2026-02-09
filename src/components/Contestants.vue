@@ -4,21 +4,21 @@ import PointsView from "@/components/Points.vue";
 
 const contestants = useContestants();
 
-const addClicked = () =>
-{
+const addClicked = () => {
 	const name = prompt("new contestant name");
-	if (name && name.trim() != "")
-	{
-		const background = prompt("contestant background", contestants.contestantsBackgrounds[name] ?? undefined);
+	if (name && name.trim() != "") {
+		const background = prompt(
+			"contestant background",
+			contestants.contestantsBackgrounds[name] ?? undefined
+		);
 		contestants.addContestant(name, background?.trim());
 	}
-}
-
+};
 </script>
 
 <template>
 	<div class="contestants" @click.right="addClicked" oncontextmenu="return false;">
-		<div v-for="(contestant, i) in contestants.contestants" class="contestant"
+		<div v-for="contestant in contestants.contestants" class="contestant"
 			@mouseup.middle="contestants.removeContestant(contestant)">
 			<PointsView :name="contestant" />
 		</div>

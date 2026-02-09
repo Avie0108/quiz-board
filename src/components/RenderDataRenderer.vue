@@ -1,46 +1,34 @@
 <script setup lang="ts">
-import type { RenderData } from "@/models/Question";
+import type { MediaData, RenderData } from "@/models/Question";
 
 defineProps<{
 	data: RenderData;
 }>();
 
+const extractMediaBinds = (data: MediaData) => {
+	if (typeof data == "object") {
+		const result: any = {
+			src: data.url,
+			...data,
+		};
+		delete result.url;
+		return result;
+	}
+
+	return { src: data };
+};
 </script>
 
 <template>
 	<div class="data-holder">
-		<div v-if="data.text" style="white-space: pre-line;">
+		<div v-if="data.text" style="white-space: pre-line">
 			{{ data.text }}
 		</div>
 		<div v-if="data.image">
-			<img v-bind="(() =>
-			{
-				if (typeof data.image == 'object')
-					return {
-						src: data.image.url,
-						...data.image,
-						url: undefined,
-					};
-				else
-					return {
-						src: data.image
-					};
-			})()" />
+			<img v-bind="extractMediaBinds(data.image)" />
 		</div>
 		<div v-if="data.video">
-			<video v-bind="(() =>
-			{
-				if (typeof data.video == 'object')
-					return {
-						src: data.video.url,
-						...data.video,
-						url: undefined,
-					};
-				else
-					return {
-						src: data.video
-					};
-			})()" controls />
+			<video v-bind="extractMediaBinds(data.video)" controls />
 		</div>
 		<div v-if="data.audio">
 			<audio :src="data.audio" controls />

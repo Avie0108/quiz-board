@@ -2,6 +2,8 @@
 import { type Category } from "@/models/Category";
 import { useQuestionStore } from "@/stores/question";
 import { useContestants } from "@/stores/contestants";
+import type { Question } from "@/models/Question";
+import yeet from "@/lib/yeet";
 defineProps<{
 	categories: Category[];
 	pointsRow: boolean;
@@ -10,6 +12,13 @@ defineProps<{
 const scores = useContestants();
 const questionStore = useQuestionStore();
 
+const openQuestion = (category: Category, name: string) => {
+	const question =
+		category.questions[name] ??
+		yeet(new Error(`Question: (${category.name}: ${name}) not found`));
+	scores.setIncrease(question.points * (category.multiplier ?? 1));
+	questionStore.setQuestion(question, category.name, name);
+};
 </script>
 
 <template>
@@ -29,15 +38,15 @@ const questionStore = useQuestionStore();
 			</div>
 			<div class="category" v-for="category in categories">
 				<div class="board-title-holder">
-					<img v-if="category.icon" :src="`Icons/${category.icon}`" :height="50">
+					<img v-if="category.icon" :src="`Icons/${category.icon}`" :height="50" />
 					<h1>{{ category.name }}</h1>
 					<h3 v-if="category.multiplier">{{ category.multiplier }}x</h3>
 				</div>
-				<button v-for="(question, name) in category.questions" @click="() =>
-				{
-					scores.setIncrease(question.points * (category.multiplier ?? 1));
-					questionStore.setQuestion(question, category.name, name);
-				}" :class="{ answered: questionStore.isAnswered(category.name, name) }">
+				<button
+					v-for="(_, name) in category.questions"
+					@click="() => openQuestion(category, name)"
+					:class="{ answered: questionStore.isAnswered(category.name, name) }"
+				>
 					{{ name }}
 				</button>
 			</div>
@@ -52,15 +61,14 @@ const questionStore = useQuestionStore();
 	width: 100%;
 	flex-direction: column;
 
-	>.board-titles {
+	> .board-titles {
 		display: flex;
 		flex-direction: row;
 		align-items: stretch;
 		row-gap: 10px;
 
-
-		>.point-title-holder {
-			flex: .5;
+		> .point-title-holder {
+			flex: 0.5;
 			text-align: center;
 			color: #cdd6f4;
 			height: 100%;
@@ -69,7 +77,7 @@ const questionStore = useQuestionStore();
 			display: flex;
 		}
 
-		>.board-title-holder {
+		> .board-title-holder {
 			flex: 1;
 			text-align: center;
 			color: #cdd6f4;
@@ -93,25 +101,24 @@ const questionStore = useQuestionStore();
 	padding-right: 5px;
 	padding-bottom: 5px;
 
-	>.point-holder {
+	> .point-holder {
 		.point-title-holder {
-			flex: .5;
+			flex: 0.5;
 			text-align: center;
 			justify-content: center;
 			align-items: center;
 			display: flex;
 		}
 
-
 		height: 100%;
 		display: flex;
-		flex: .5;
+		flex: 0.5;
 		flex-direction: column;
 		align-items: stretch;
 		row-gap: 10px;
 		color: #cdd6f4;
 
-		>* {
+		> * {
 			flex: 1;
 			font-size: 3em;
 			display: flex;
@@ -120,7 +127,7 @@ const questionStore = useQuestionStore();
 		}
 	}
 
-	>.category {
+	> .category {
 		height: 100%;
 		display: flex;
 		flex: 1;
@@ -128,7 +135,7 @@ const questionStore = useQuestionStore();
 		align-items: stretch;
 		row-gap: 10px;
 
-		>button {
+		> button {
 			flex: 1;
 			font-size: 2.5em;
 			background-color: var(--data-bg-color);
@@ -143,7 +150,7 @@ const questionStore = useQuestionStore();
 			}
 		}
 
-		>.board-title-holder {
+		> .board-title-holder {
 			flex: 1;
 			text-align: center;
 			color: #cdd6f4;

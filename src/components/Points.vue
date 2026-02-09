@@ -11,31 +11,43 @@ const contestants = useContestants();
 const background = computed(() => `url(${contestants.contestantsBackgrounds[props.name]})`);
 const points = computed(() => contestants.contestantsPoints[props.name]);
 
-const setPoints = (event: Event) =>
-{
-	contestants.setPoints(parseInt((event.target as HTMLSpanElement).textContent ?? "0"), props.name);
+const setPoints = (event: Event) => {
+	contestants.setPoints(
+		parseInt((event.target as HTMLSpanElement).textContent ?? "0"),
+		props.name
+	);
 };
 
-const cancelEnter = (e: KeyboardEvent) =>
-{
+const cancelEnter = (e: KeyboardEvent) => {
 	e.preventDefault();
 	(e.target as HTMLSpanElement).blur();
 };
 
+const addButtonPressed = (e: PointerEvent) => {
+	contestants.incrementPoints(props.name);
+	(e.target as HTMLButtonElement).blur();
+};
+
+const bonusButtonPressed = (e: PointerEvent) => {
+	contestants.addBonusPoints(props.name);
+	(e.target as HTMLButtonElement).blur();
+};
+
+const subButtonPressed = (e: PointerEvent) => {
+	contestants.decrementPoints(props.name);
+	(e.target as HTMLButtonElement).blur();
+};
 </script>
 
 <template>
 	<div class="points-holder">
-		<span contenteditable @blur="setPoints" @keydown.enter="cancelEnter" @click.stop="() => { }">
+		<span contenteditable @blur="setPoints" @keydown.enter="cancelEnter" @click.stop="() => {}">
 			{{ points }}
 		</span>
 		<div class="points-buttons">
-			<button class="points-add-button"
-				@click="(e) => { contestants.incrementPoints(name); (e.target as HTMLButtonElement).blur(); }">+</button>
-			<button class="points-bonus-button"
-				@click="(e) => { contestants.addBonusPoints(name); (e.target as HTMLButtonElement).blur(); }">^</button>
-			<button class="points-sub-button"
-				@click="(e) => { contestants.decrementPoints(name); (e.target as HTMLButtonElement).blur(); }">-</button>
+			<button class="points-add-button" @click="addButtonPressed">+</button>
+			<button class="points-bonus-button" @click="bonusButtonPressed">^</button>
+			<button class="points-sub-button" @click="subButtonPressed">-</button>
 		</div>
 		<h2>{{ name }}</h2>
 	</div>
@@ -65,12 +77,11 @@ const cancelEnter = (e: KeyboardEvent) =>
 
 	height: 100%;
 
-	>h2 {
+	> h2 {
 		text-decoration: underline;
-
 	}
 
-	>span {
+	> span {
 		width: 100%;
 		border: none;
 		font-size: 1.5em;
@@ -78,8 +89,8 @@ const cancelEnter = (e: KeyboardEvent) =>
 		text-align: right;
 	}
 
-	>.points-buttons {
-		>button {
+	> .points-buttons {
+		> button {
 			border: none;
 			background-color: inherit;
 			font-size: 2em;

@@ -13,6 +13,7 @@ Features were added when I needed them so the things you need might not be imple
 This project uses [Vue3](https://vuejs.org/) with [Vite](https://vite.dev/), [Node.js](https://nodejs.org/en), and [pnpm](https://pnpm.io), please install these before continuing.
 
 Clone the repository with git and install the dependencies
+
 ```shell
 git clone https://github.com/Avie0108/quiz-board.git
 cd quiz-board
@@ -28,7 +29,7 @@ By default it should look like this:
 import type { Category } from "./models/Category";
 
 export const Questions: Category[] = [
-    // here go your questions
+	// here go your questions
 ];
 
 export default Questions;
@@ -38,12 +39,12 @@ Every Question must be part of a Category:
 
 ```ts
 export const Questions: Category[] = [
-    {
-        name: "Example Category",
-        multiplier: 1.0, //optional multiplier of points
-        icon: "Example.png", // optional icon for the category
-        questions: { },
-    }
+	{
+		name: "Example Category",
+		multiplier: 1.0, //optional multiplier of points
+		icon: "Example.png", // optional icon for the category
+		questions: {},
+	},
 ];
 ```
 
@@ -51,31 +52,31 @@ A question must have a name, the points it's worth, the question itself, and the
 
 ```ts
 questions: {
-    "example": { // the name
-        points: 100, // points before multiplier is applied
-        question: {
-            text: "the question", // optional text
-            image: { // optional image
-                url: "questions/example.png", // url of the image minus public/
-                height: 400, // optional height of the image
-                width: 400, // optional width of the image
-            },
-            video: { // optional video
-                url: "questions/example.mp4", // url of the video minus public/
-                height: 400, // optional height of the video
-                width: 400, // optional width of the video
-                loop: true, // optional if the video should loop
-                autoplay: true, // optional if the video should play automatically
-            },
-            audio: "example.mp3", // optional audio
-        },
-        answer: {
-            text: "the question", // optional text
-            image: "questions/example.png", // shortcut for image
-            video: "questions/example.png", // shortcut for video
-            audio: "example.mp3", // optional audio
-        },
-    }
+	"example": { // the name
+		points: 100, // points before multiplier is applied
+		question: {
+			text: "the question", // optional text
+			image: { // optional image
+				url: "questions/example.png", // url of the image minus public/
+				height: 400, // optional height of the image
+				width: 400, // optional width of the image
+			},
+			video: { // optional video
+				url: "questions/example.mp4", // url of the video minus public/
+				height: 400, // optional height of the video
+				width: 400, // optional width of the video
+				loop: true, // optional if the video should loop
+				autoplay: true, // optional if the video should play automatically
+			},
+			audio: "example.mp3", // optional audio
+		},
+		answer: {
+			text: "the question", // optional text
+			image: "questions/example.png", // shortcut for image
+			video: "questions/example.png", // shortcut for video
+			audio: "example.mp3", // optional audio
+		},
+	}
 }
 ```
 

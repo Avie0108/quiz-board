@@ -12,6 +12,6 @@ with open("src/data/backgrounds.ts", "w", encoding="utf-8") as f:
 	f.writelines([f'\t"{f}",\n' for f in files])
 	f.write("""];
 
-const choose = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
+const choose = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]!;
 const GetRandomBackground = () => `url("backgrounds/${choose(Backgrounds)}")`;
 export default GetRandomBackground;""")
