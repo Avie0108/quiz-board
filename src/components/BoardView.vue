@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { type Category } from "@/models/Category";
+import type { Category } from "@/models/Category";
 import { useQuestionStore } from "@/stores/question";
 import { useContestants } from "@/stores/contestants";
-import type { Question } from "@/models/Question";
 import yeet from "@/lib/yeet";
 defineProps<{
 	categories: Category[];

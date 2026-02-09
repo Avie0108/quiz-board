@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useContestants } from "@/stores/contestants";
-import PointsView from "@/components/Points.vue";
+import PointsView from "@/components/PointsView.vue";
 
 const contestants = useContestants();
 
@@ -9,7 +9,7 @@ const addClicked = () => {
 	if (name && name.trim() != "") {
 		const background = prompt(
 			"contestant background",
-			contestants.contestantsBackgrounds[name] ?? undefined
+			contestants.contestantsBackgrounds.get(name) ?? undefined
 		);
 		contestants.addContestant(name, background?.trim());
 	}
@@ -18,8 +18,11 @@ const addClicked = () => {
 
 <template>
 	<div class="contestants" @click.right="addClicked" oncontextmenu="return false;">
-		<div v-for="contestant in contestants.contestants" class="contestant"
-			@mouseup.middle="contestants.removeContestant(contestant)">
+		<div
+			v-for="contestant in contestants.contestants"
+			class="contestant"
+			@mouseup.middle="contestants.removeContestant(contestant)"
+		>
 			<PointsView :name="contestant" />
 		</div>
 	</div>

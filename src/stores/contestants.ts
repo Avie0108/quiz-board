@@ -1,68 +1,51 @@
-import yeet from "@/lib/yeet";
-import { set, useLocalStorage } from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
-import { computed, ref } from "vue";
-
-export type ContestantId = number | string;
+import { ref } from "vue";
 
 export const useContestants = defineStore("contestants", () => {
 	const increase = ref(100);
-	const contestants = useLocalStorage<string[]>("contestants", []);
-	const contestantsPoints = useLocalStorage<{ [contestant: string]: number }>(
-		"contestantsPoints",
-		{}
+	const contestants = useLocalStorage<Set<string>>("contestants", new Set());
+	const contestantsPoints = useLocalStorage<Map<string, number>>("contestantsPoints", new Map());
+	const contestantsBackgrounds = useLocalStorage<Map<string, string | null>>(
+		"contestantsBackgrounds",
+		new Map()
 	);
-	const contestantsBackgrounds = useLocalStorage<{
-		[contestant: string]: string | null;
-	}>("contestantsBackgrounds", {});
-
-	const getContestantName = (contestant: ContestantId): string => {
-		if (typeof contestant == "string") return contestant;
-		return contestants.value[contestant] ?? yeet(new Error("Contestant not found"));
-	};
 
 	function setIncrease(inc: number) {
 		increase.value = inc;
 	}
 
 	function incrementPoints(contestant: string) {
-		const name = getContestantName(contestant);
-		contestantsPoints.value[name] ??= 0;
-		contestantsPoints.value[name] += increase.value;
+		const oldValue = contestantsPoints.value.get(contestant) ?? 0;
+		contestantsPoints.value.set(contestant, oldValue + increase.value);
 	}
 
 	function decrementPoints(contestant: string) {
-		const name = getContestantName(contestant);
-		contestantsPoints.value[name] ??= 0;
-		contestantsPoints.value[name] -= increase.value;
+		const oldValue = contestantsPoints.value.get(contestant) ?? 0;
+		contestantsPoints.value.set(contestant, oldValue - increase.value);
 	}
 
 	function addBonusPoints(contestant: string) {
-		const name = getContestantName(contestant);
-		contestantsPoints.value[name] ??= 0;
-		contestantsPoints.value[name] += increase.value / 2;
+		const oldValue = contestantsPoints.value.get(contestant) ?? 0;
+		contestantsPoints.value.set(contestant, oldValue + increase.value / 2);
 	}
 
-	const setPoints = (points: number, contestant: ContestantId) => {
-		const name = getContestantName(contestant);
-		contestantsPoints.value[name] ??= 0;
-		contestantsPoints.value[name] = points;
+	const setPoints = (points: number, contestant: string) => {
+		contestantsPoints.value.set(contestant, points);
 	};
 
 	const addContestant = (contestant: string, background?: string | null) => {
-		if (!contestants.value.includes(contestant)) {
-			contestants.value.push(contestant);
-			contestantsPoints.value[contestant] = 0;
+		if (!contestants.value.has(contestant)) {
+			contestants.value.add(contestant);
+			contestantsPoints.value.set(contestant, 0);
 		}
-		contestantsBackgrounds.value[contestant] = background ?? null;
+		contestantsBackgrounds.value.set(contestant, background ?? null);
 	};
 
-	const removeContestant = (contestant: number | string) => {
-		const name = getContestantName(contestant);
-
-		contestants.value.splice(contestants.value.indexOf(name), 1);
-		delete contestantsPoints.value[name];
-		delete contestantsBackgrounds.value[name];
+	const removeContestant = (contestant: string) => {
+		contestants.value.delete(contestant);
+		contestantsPoints.value.delete(contestant);
+		contestantsBackgrounds.value.delete(contestant);
 	};
 
 	return {
@@ -70,7 +53,6 @@ export const useContestants = defineStore("contestants", () => {
 		contestants,
 		contestantsPoints,
 		contestantsBackgrounds,
-		getContestantName,
 		setIncrease,
 		incrementPoints,
 		decrementPoints,

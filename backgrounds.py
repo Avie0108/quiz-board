@@ -12,6 +12,7 @@ with open("src/data/backgrounds.ts", "w", encoding="utf-8") as f:
 	f.writelines([f'\t"{f}",\n' for f in files])
 	f.write("""];
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const choose = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]!;
 const GetRandomBackground = () => `url("backgrounds/${choose(Backgrounds)}")`;
 export default GetRandomBackground;""")

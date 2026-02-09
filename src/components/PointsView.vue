@@ -8,8 +8,8 @@ const props = defineProps<{
 
 const contestants = useContestants();
 
-const background = computed(() => `url(${contestants.contestantsBackgrounds[props.name]})`);
-const points = computed(() => contestants.contestantsPoints[props.name]);
+const background = computed(() => `url(${contestants.contestantsBackgrounds.get(props.name)})`);
+const points = computed(() => contestants.contestantsPoints.get(props.name));
 
 const setPoints = (event: Event) => {
 	contestants.setPoints(

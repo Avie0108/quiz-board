@@ -5,13 +5,14 @@ defineProps<{
 	data: RenderData;
 }>();
 
-const extractMediaBinds = (data: MediaData) => {
+type MediaBind = Pick<MediaData, Exclude<keyof MediaData, "url">> & { src: string };
+
+const extractMediaBinds = (data: MediaData | string): MediaBind => {
 	if (typeof data == "object") {
-		const result: any = {
+		const result: MediaBind = {
 			src: data.url,
 			...data,
 		};
-		delete result.url;
 		return result;
 	}
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Board from "@/components/Board.vue";
-import Contestants from "@/components/Contestants.vue";
+import BoardView from "@/components/BoardView.vue";
+import ContestantsView from "@/components/ContestantsView.vue";
 import QuestionView from "@/components/QuestionView.vue";
 import toRender from "@/questions";
 import RandomBackground from "@/data/backgrounds";
@@ -12,18 +12,20 @@ const background = ref(RandomBackground());
 setInterval(() => (background.value = RandomBackground()), /**/ 60 * /**/ 1000);
 
 const question = useQuestionStore();
-
-const players = ["Test"].sort();
 </script>
 
 <template>
 	<div class="background-holder">
 		<div class="holder">
 			<div class="board-holder">
-				<Board v-if="question.question == null" :categories="toRender" :points-row="true" />
+				<BoardView
+					v-if="question.question == null"
+					:categories="toRender"
+					:points-row="true"
+				/>
 				<QuestionView v-else :question="question.question" />
 			</div>
-			<Contestants class="score-bar" />
+			<ContestantsView class="score-bar" />
 		</div>
 	</div>
 </template>

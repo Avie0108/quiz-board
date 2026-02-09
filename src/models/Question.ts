@@ -26,4 +26,4 @@ export interface Question {
 	points: number;
 }
 
-export type MediaData = ImageData | VideoData | string;
+export type MediaData = ImageData | VideoData;
