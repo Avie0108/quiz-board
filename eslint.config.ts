@@ -3,6 +3,7 @@ import { defineConfig } from "eslint/config";
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import vueslint from "eslint-plugin-vue";
+import vueparser from "vue-eslint-parser";
 
 import globals from "globals";
 
@@ -12,11 +13,12 @@ export default defineConfig(eslint.configs.recommended, tseslint.configs.strict,
 		...tseslint.configs.strict,
 		...vueslint.configs["flat/strongly-recommended"],
 	],
-	files: ["**/*.vue"],
+	files: ["**/*.{ts,vue}"],
 	languageOptions: {
 		ecmaVersion: "latest",
 		sourceType: "module",
 		globals: globals.browser,
+		parser: vueparser,
 		parserOptions: {
 			parser: tseslint.parser,
 		},

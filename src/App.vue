@@ -18,11 +18,7 @@ const question = useQuestionStore();
 	<div class="background-holder">
 		<div class="holder">
 			<div class="board-holder">
-				<BoardView
-					v-if="question.question == null"
-					:categories="toRender"
-					:points-row="true"
-				/>
+				<BoardView v-if="question.question == null" :categories="toRender" :points-row="true" />
 				<QuestionView v-else :question="question.question" />
 			</div>
 			<ContestantsView class="score-bar" />
@@ -32,7 +28,7 @@ const question = useQuestionStore();
 
 <style lang="scss">
 :root {
-	--data-bg-color: hsla(240, 21%, 25%, 0.878);
+	--data-bg-color: hsla(240, 21%, 25%, 87.8%);
 }
 </style>
 
